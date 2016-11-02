@@ -10,10 +10,9 @@
 #define RESET "\x1B[0m"
 #define GRY "\x1B[36m"
 
-
-int main(){
-    DIR *stream = opendir(".");
-    printf("\nEverything in THIS directory:\n");
+void printEverything(char directory[256]){
+    DIR *stream = opendir(directory);
+    printf(GRY "\nInfo for: " RESET "%s\n", directory);
 
     int size;
     struct dirent *file;
@@ -59,6 +58,10 @@ int main(){
     printf(GRN "%s" RESET, directories);
     printf(GRY "\nFiles: \n" RESET);
     printf("%s\n", files);
+}
+
+int main(){
+    printEverything(".");
 
     return 0;
 }
