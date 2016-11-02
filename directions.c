@@ -6,11 +6,13 @@
 
 void totalSize(DIR *stream){  
   printf("Size: ");
+  int size;
   while(readdir(stream)){
     struct stat info;
-    stat(stream, &info);
-    int size = info.st_mode;
-    if(size >= 1000000000){
+    struct dirent *file = readdir(stream);
+    stat(file->d_name, &info);
+    size += info.st_size;
+    /*if(size >= 1000000000){
       printf("%d.%d GB\n", size/1000000000, size%1000000000/1000000);
     }else{
       if(size >= 1000000){
@@ -22,7 +24,7 @@ void totalSize(DIR *stream){
 	  printf("%d B\n", size);
 	}
       }
-    }
+      }*/
   }
 }
 
@@ -40,6 +42,7 @@ void ls(DIR *stream){
 int main(){
   DIR *stream = opendir(".");
   ls(stream);
+  totalSize(stream);
   
   return 0;
 }
